@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Process;
+use App\Jobs\ProcessPodcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +18,42 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/add-jobs-to-queue', function () {
+    
+
+    for ($i=0; $i < 10; $i++) { 
+        ProcessPodcast::dispatch();
+    }
+
+    return 'done';
+});
+
+Route::get('/restart-queue', function () {
+    
+
+
+    return 'queue restarted';
+});
+
+
+Route::get('/restart-daemon', function () {
+    
+
+
+ 
+    $result = Process::run('sudo -S supervisorctl restart daemon-ID:*');
+
+    dd($result,  $result->output());
+ 
+    return $result->output();
+
+
+    //return 'daemon restarted';
+});
+
+
 
 Route::middleware([
     'auth:sanctum',
