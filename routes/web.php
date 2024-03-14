@@ -43,7 +43,7 @@ Route::get('/restart-daemon', function () {
 
 
  
-    $result = Process::run('sudo -S supervisorctl restart daemon-ID:*');
+    $result = Process::run('sudo -S supervisorctl restart daemon-ID:804179');
 
     dd($result,  $result->output());
  
